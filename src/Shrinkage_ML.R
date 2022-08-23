@@ -48,22 +48,3 @@ getTrainPerf(mod0)
 predictions <- predict.train(mod0,newdata=t(discoveryMatrix),type="raw")
 confusionMatrix(predictions,reference=make.names(groups$values))
 #----------------------------------------------------------------------
-
-
-
-
-suppressWarnings(RNGversion("3.5.0"))
-set.seed(120)
-
-x <- matrix(rnorm(1000*20),ncol=20)
-y <- sample(c(1:4),size=20,replace=TRUE)
-
-mydata <- list(x=x,y=factor(y), geneid=as.character(1:nrow(x)),
-               genenames=paste("g",as.character(1:nrow(x)),sep=""))
-
-mytrain <-   pamr.train(mydata)
-mycv <- pamr.cv(mytrain,mydata)
-
-pamr.listgenes(mytrain, mydata, threshold=1.6)
-
-genes <- pamr.listgenes(results,data=list(x=as.matrix(discoveryMatrix.pamr),y=groups,genenames=rownames(discoveryMatrix.pamr),geneid=rownames(discoveryMatrix.pamr)),threshold=4.5,genenames=T)
